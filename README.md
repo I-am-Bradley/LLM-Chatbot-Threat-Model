@@ -1,16 +1,13 @@
-## Hi there 👋
+# LLM-Chatbot-Threat-Model (Initial Scope Defined)
 
-<!--
-**I-am-Bradley/I-am-Bradley** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+## 💡 Executive Summary
+This project initiates a **comprehensive threat model** for our organization's user-facing **Large Language Model (LLM) Chatbot**, which is deployed in a **secure, isolated environment**.
+The primary business risk addressed is the compromise of **Proprietary Knowledge** (Data Leakage) and the **Execution of Unauthorized Actions** (Agent Integrity) against internal systems. 
+By assuming a secure, offline model, the focus is placed entirely on **Runtime Interaction Flaws**, chiefly **Prompt Injection (LLM01)**, **Excessive Agency (LLM06)**, and **Improper Output Handling (LLM05)**. The results of this modeling will provide the critical foundation for building a robust, evidence-based **AI Governance Policy**.
 
-Here are some ideas to get you started:
+## 🎯 Project Scope (Current Phase)
+The current focus is defining the **system boundaries** for the threat model, specifically targeting the interaction between the user, the LLM API, and the Retrieval-Augmented Generation (RAG) backend.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## ⚙️ Technologies/Frameworks
+- LLM Architecture (Conceptual)
+- STRIDE/OWASP Top 10 for LLMs Methodology (Conceptual)
