@@ -5,7 +5,7 @@ openai
 pydantic
 ## Discuss the flow diagram of how the LLM works from user input all the way to data output.
 
-## Defining All Possible Attack Surfaces and Threat Enuneration 
+## Defining All Possible Attack Surfaces and Threat Enumeration 
 The best way to be able to analyze it all is to follow the flow diagram from
 user query all the way to the output by the LLM.
 At the user interface or the front-end attack surface, we have the following:
