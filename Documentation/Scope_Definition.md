@@ -1,20 +1,22 @@
-System components
+## System components
 1. User Interface/Front-end: Web, mobile, or API interfaces that accept user input.
 2. Application backend/ middleware. The user authentication, session management, input validation/sanitization and the call to the LLM.
 3. The Model Data: Training, Fine-tuning and context).
 4. Downstream Systems/Agents
 5. Maching Learming Operations and Infrastructure
-Assumptions:
+
+## Assumptions.
 1. The LLM is securely hosted.
-In-Scope Threats.
+
+## In-Scope Threats.
 1. Prompt Injection
 2. Sensitive Information Disclosure
 3. Excessive Agency
 4. Improper Output Handling
 5. Model Denial of Service
 6. System Prompt Leakage
-Out-of-Scope: 
-What are you not modelings:
+
+## Out-of-Scope.
 1. Host System Compromise
 2. Networking Infrastructure Failure
 3. Cloud/Data Center Vendor Compromise
