@@ -1,5 +1,0 @@
-# Initial requirements for threat modeling analysis and eventual testing
-pandas
-numpy
-openai
-pydantic
