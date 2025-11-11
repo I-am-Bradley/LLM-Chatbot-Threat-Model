@@ -1,11 +1,11 @@
 ```mermaid
 flowchart TD
-    A[User Input (Text Prompt)] --> B{Application Backend/Middleware};
+    A["User Input (Text Prompt)"] --> B{Application Backend/Middleware};
     subgraph Application Zone
         B -- Authentication, Session Mgmt, Input Validation --> C[Pre-Processing: Input Sanitization];
         C -- Keywords/Embeddings Extraction --> D[RAG System Query];
     end
-    subgraph Data Zone (Secure, Offline)
+    subgraph Data Zone[Secure, Offline]
         D -- Retrieve Relevant Context --> E[RAG System (Vector DB/Knowledge Base)];
     end
     subgraph Application Zone
@@ -22,3 +22,5 @@ flowchart TD
         J -- Sanitized, Encoded Output --> K[User Interface/Front-end];
     end
     K --> L[Displayed Output to User];
+```
+```
