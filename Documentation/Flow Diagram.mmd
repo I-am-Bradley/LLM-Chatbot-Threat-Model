@@ -1,5 +1,5 @@
 ```mermaid
-flowchart TD;
+flowchart TD
     A[User Input (Text Prompt)] --> B{Application Backend/Middleware};
     subgraph Application Zone
         B -- Authentication, Session Mgmt, Input Validation --> C[Pre-Processing: Input Sanitization];
@@ -22,4 +22,3 @@ flowchart TD;
         J -- Sanitized, Encoded Output --> K[User Interface/Front-end];
     end
     K --> L[Displayed Output to User];
-```
