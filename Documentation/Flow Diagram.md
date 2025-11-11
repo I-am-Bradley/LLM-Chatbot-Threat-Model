@@ -1,26 +1,65 @@
 ```mermaid
-flowchart TD
-    A["User Input (Text Prompt)"] --> B{Application Backend/Middleware};
+graph TD
+    %% ------------------- Define Zones -------------------
+    subgraph Untrusted Zone
+        A[1. User Input - Prompt]
+        L[8. Output - Displayed to User]
+    end
+    
     subgraph Application Zone
-        B -- Authentication, Session Mgmt, Input Validation --> C[Pre-Processing: Input Sanitization];
-        C -- Keywords/Embeddings Extraction --> D[RAG System Query];
+        B(2. Pre-Processing: Auth, Validation)
+        F(4. Prompt Assembly)
+        H{5b. Agent Logic Check}
+        J(7. Post-Processing: Encoding)
+        K[8. Output: UI/Front-end]
     end
-    subgraph Data Zone[Secure, Offline]
-        D -- Retrieve Relevant Context --> E[RAG System (Vector DB/Knowledge Base)];
+    
+    subgraph Data Zone - Secure
+        D{3. Context Retrieval - Query}
+        E[RAG System - Vector DB]
     end
-    subgraph Application Zone
-        E -- Context Chunks --> F[Prompt Assembly: System Prompt + RAG Context + User Input];
+
+    subgraph LLM Processing Zone - Secure
+        G[5a. LLM Core - Inference]
     end
-    subgraph LLM Processing Zone (Secure, Offline)
-        F -- Assembled Prompt --> G[LLM Core (Offline Inference)];
+
+    subgraph Internal System Zone
+        I[6. Agent Action - Downstream Systems]
     end
-    G -- LLM Output (Text or Tool Call) --> H{Agent Logic: Is a Tool Call Needed?};
-    H -- YES (Tool Call) --> I[Downstream Systems/Agents (Internal APIs/DBs)];
-    I -- Agent Action Result --> J[Post-Processing: Output Validation/Encoding];
-    H -- NO (Text Output) --> J;
-    subgraph Application Zone
-        J -- Sanitized, Encoded Output --> K[User Interface/Front-end];
-    end
-    K --> L[Displayed Output to User];
+
+    %% ------------------- Define Flow (Numbered Steps) -------------------
+    
+    A -->|1. Untrusted -> Application| B;
+    
+    B -->|2. Stays in Application| D;
+    
+    D -->|3. Application -> Data Zone| E;
+    E -->|3. Retrieved Context| F;
+    
+    F -->|4. Stays in Application| G;
+    
+    G -->|5. LLM Output| H; 
+    
+    H -- 5b. Tool Call YES --> I;
+    I -->|Result from Agent| J; 
+    
+    H -- 5b. Tool Call NO --> J;
+
+    J -->|7. LLM/Internal -> Application| K;
+    
+    K -->|8. Application -> Untrusted| L;
+
+    %% Add clear boundary markers for context
+    style A fill:#FFCCCC,stroke:#333
+    style L fill:#FFCCCC,stroke:#333
+    style B fill:#CCFFCC,stroke:#333
+    style C fill:#CCFFCC,stroke:#333
+    style F fill:#CCFFCC,stroke:#333
+    style H fill:#CCFFCC,stroke:#333
+    style J fill:#CCFFCC,stroke:#333
+    style K fill:#CCFFCC,stroke:#333
+    style E fill:#CCCCFF,stroke:#333
+    style G fill:#FFCC99,stroke:#333
+    style I fill:#FFFFCC,stroke:#333
 ```
 ```
