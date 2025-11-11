@@ -1,0 +1,25 @@
+```mermaid
+flowchart TD;
+    A[User Input (Text Prompt)] --> B{Application Backend/Middleware};
+    subgraph Application Zone
+        B -- Authentication, Session Mgmt, Input Validation --> C[Pre-Processing: Input Sanitization];
+        C -- Keywords/Embeddings Extraction --> D[RAG System Query];
+    end
+    subgraph Data Zone (Secure, Offline)
+        D -- Retrieve Relevant Context --> E[RAG System (Vector DB/Knowledge Base)];
+    end
+    subgraph Application Zone
+        E -- Context Chunks --> F[Prompt Assembly: System Prompt + RAG Context + User Input];
+    end
+    subgraph LLM Processing Zone (Secure, Offline)
+        F -- Assembled Prompt --> G[LLM Core (Offline Inference)];
+    end
+    G -- LLM Output (Text or Tool Call) --> H{Agent Logic: Is a Tool Call Needed?};
+    H -- YES (Tool Call) --> I[Downstream Systems/Agents (Internal APIs/DBs)];
+    I -- Agent Action Result --> J[Post-Processing: Output Validation/Encoding];
+    H -- NO (Text Output) --> J;
+    subgraph Application Zone
+        J -- Sanitized, Encoded Output --> K[User Interface/Front-end];
+    end
+    K --> L[Displayed Output to User];
+```
