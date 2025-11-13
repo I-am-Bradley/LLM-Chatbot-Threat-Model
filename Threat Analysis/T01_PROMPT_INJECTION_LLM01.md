@@ -84,15 +84,13 @@ graph TD
 
 ## The DREAD and CVSS Score 
 ## The DREAD Score
-The DREAD score for a Prompt Injection attack is typically high, summing up to 13 out of 15, confirming its status as a Critical risk.
-This is derived from assigning a score of High (3) for Damage (due to the potential for data leakage and unauthorized actions),
-High (3) for Reproducibility (it requires only text input and clever phrasing), and High (3) for Exploitability (it operates at the application layer, 
-often bypassing basic security checks). Discoverability and Affected Users usually receive a Medium (2) score, 
-as the attack is often found through simple trial-and-error and impacts specific users or datasets.
+The **DREAD score** for a Prompt Injection attack is typically high, summing up to **13 out of 15**, confirming its status as a **Critical** risk.
+This is derived from assigning a score of **High (3)** for **Damage** (due to the potential for data leakage and unauthorized actions),
+**High (3)** for **Reproducibility** (it requires only text input and clever phrasing), and **High (3)** for **Exploitability** (it operates at the application layer, often bypassing basic security checks). **Discoverability** and **Affected Users** usually receive a **Medium (2)** score, as the attack is often found through simple trial-and-error and impacts specific users or datasets.
 
 ## The CVSS Score
-The CVSS v3.1 Base Score for this type of attack is typically around 7.1 (High Severity). 
-This score is driven by a High rating for both Confidentiality and Integrity impacts, 
+The **CVSS v3.1 Base Score** for this type of attack is typically around **7.1 (High Severity)**. 
+This score is driven by a **High** rating for both **Confidentiality** and **Integrity** impacts, 
 as the attack can disclose proprietary data and perform unauthorized state changes (Integrity) via the agentic functions, 
 confirming the necessity of immediate, high-priority mitigation.
 
