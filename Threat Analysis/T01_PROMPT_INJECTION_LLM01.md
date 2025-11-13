@@ -24,49 +24,62 @@ The prompt injection successfully compromises the integrity of the application's
 graph TD
     %% ------------------- Define Zones -------------------
     subgraph Untrusted Zone
-        A[1. User's Question]
+        A[1. User Input - Prompt]
+        L[8. Output - Displayed to User]
     end
     
     subgraph Application Zone
-        B(2. Security Check 1: Input Validation)
-        F(4. Assemble Prompt)
-        H{5b. Is an Internal Tool Needed?}
-        J(7. Security Check 2: Output Encoding)
+        B(2. Pre-Processing: Auth, Validation)
+        F(4. Prompt Assembly)
+        H{5b. Agent Logic Check}
+        J(7. Post-Processing: Encoding)
+        K[8. Output: UI/Front-end]
     end
     
     subgraph Data Zone - Secure
-        D{3. Search Internal Knowledge}
-        E[RAG Knowledge Base - Vector DB]
+        D{3. Context Retrieval - Query}
+        E[RAG System - Vector DB]
     end
 
     subgraph LLM Processing Zone - Secure
-        G[5a. LLM's Thinking Core]
+        G[5a. LLM Core - Inference]
     end
 
-    %% ------------------- Define Attack Flow (Bold Lines - The "Red" Lines) -------------------
-    
+    subgraph Internal System Zone
+        I[6. Agent Action - Downstream Systems]
+    end
+
+    %% ------------------- Define Attack Flow (Bold Lines) -------------------
     A ==>|LLM01 Direct Injection| B;
-    
-    B --> D;
-    
-    D --> E;
     E ==>|LLM01 Indirect Injection Payload| F;
-    
     F ==>|LLM01 Contaminated Final Prompt| G;
-    
     G ==>|LLM01 Command Execution| H;
-    
     H -- Command Executed --> J;
-    
+
     %% ------------------- Define Clean Data Flow (Solid Lines) -------------------
-    
-    A -->|User Input Clean Path| B;
-    B --> D;
-    D --> E;
-    E -->|Retrieved Context Clean Path| F;
-    F -->|Final Prompt Clean Path| G;
-    G --> H;
-    H -- Command Executed --> J;
+    A -->|1. Untrusted -> Application| B;
+    B -->|2. Stays in Application| D;
+    D -->|3. Application -> Data Zone| E;
+    E -->|3. Retrieved Context| F;
+    F -->|4. Stays in Application| G;
+    G -->|5. LLM Output| H;
+    H -- 5b. Tool Call YES --> I;
+    I -->|Result from Agent| J;
+    H -- 5b. Tool Call NO --> J;
+    J -->|7. LLM/Internal -> Application| K;
+    K -->|8. Application -> Untrusted| L;
+
+    %% Add clear boundary markers for context (Original DFD Styles)
+    style A fill:#FFCCCC,stroke:#333
+    style L fill:#FFCCCC,stroke:#333
+    style B fill:#CCFFCC,stroke:#333
+    style F fill:#CCFFCC,stroke:#333
+    style H fill:#CCFFCC,stroke:#333
+    style J fill:#CCFFCC,stroke:#333
+    style K fill:#CCFFCC,stroke:#333
+    style E fill:#CCCCFF,stroke:#333
+    style G fill:#FFCC99,stroke:#333
+    style I fill:#FFFFCC,stroke:#333
 ```
 
 ## The DREAD and CVSS Score 
@@ -96,44 +109,74 @@ smaller model to check for non-compliance before the output is passed to the use
 graph TD
     %% ------------------- Define Zones -------------------
     subgraph Untrusted Zone
-        A[1. User's Question]
+        A[1. User Input - Prompt]
+        L[8. Output - Displayed to User]
     end
     
     subgraph Application Zone
-        B(2. Security Check 1: Input Validation)
-        F(4. Assemble Prompt)
-        H{5b. Is an Internal Tool Needed?}
-        J(7. Security Check 2: Output Encoding)
+        B(2. Pre-Processing: Auth, Validation)
+        F(4. Prompt Assembly)
+        H{5b. Agent Logic Check}
+        J(7. Post-Processing: Encoding)
+        K[8. Output: UI/Front-end]
     end
     
     subgraph Data Zone - Secure
-        D{3. Search Internal Knowledge}
-        E[RAG Knowledge Base - Vector DB]
+        D{3. Context Retrieval - Query}
+        E[RAG System - Vector DB]
     end
 
     subgraph LLM Processing Zone - Secure
-        G[5a. LLM's Thinking Core]
+        G[5a. LLM Core - Inference]
     end
 
-    %% ------------------- Define Clean Data Flow (Solid Lines) -------------------
-    A -->|User Input Clean Path| B;
-    B --> D;
-    D --> E;
-    E -->|Retrieved Context Clean Path| F;
-    F -->|Final Prompt Clean Path| G;
-    G --> H;
-    H -- Command Executed --> J;
-    
-    %% ------------------- Define Mitigation Points (Dashed Lines - Where Code Acts) -------------------
-    
-    A -.-|Input Sanitization & Filtering| B;
-    
-    E -.-|RAG Source Sandboxing| F;
+    subgraph Internal System Zone
+        I[6. Agent Action - Downstream Systems]
+    end
 
-    F -.-|Strict Context Segregation & Defensive Prompting| G;
+    %% ------------------- Define Attack Flow and Mitigation -------------------
     
-    G -.-|Auditor LLM / Output Re-Verification| J;
+    %% Injection Point 1: User Input (Mitigated at B)
+    A -.-|LLM01 Direct Injection| B;
+    B ==>|Mitigation: Input Sanitization| D; 
+
+    %% Injection Point 2: RAG Payload (Mitigated at F)
+    E -.-|LLM01 Indirect Injection Payload| F;
+    F ==>|Mitigation: RAG Sandboxing| G;
+
+    %% Execution Point (Mitigated at F and G)
+    F -.-|LLM01 Contaminated Final Prompt| G;
+    F ==>|Mitigation: Context Segregation & Defense Prompt| G;
     
-    %% Note: The attack path is implicitly broken at F and G by the logic in the dashed lines.
+    G -.-|LLM01 Command Execution| H;
+    G ==>|Mitigation: Auditor LLM Re-Verification| H;
+
+    %% ------------------- Define Clean Data Flow (Solid Lines) -------------------
+    
+    A -->|1. Untrusted -> Application| B;
+    B -->|2. Stays in Application| D;
+    D -->|3. Application -> Data Zone| E;
+    E -->|3. Retrieved Context| F;
+    F -->|4. Stays in Application| G;
+    G -->|5. LLM Output| H;
+    
+    H -- 5b. Tool Call YES --> I;
+    I -->|Result from Agent| J;
+    H -- 5b. Tool Call NO --> J;
+    
+    J -->|7. LLM/Internal -> Application| K;
+    K -->|8. Application -> Untrusted| L;
+
+    %% Add clear boundary markers for context (Original DFD Styles)
+    style A fill:#FFCCCC,stroke:#333
+    style L fill:#FFCCCC,stroke:#333
+    style B fill:#CCFFCC,stroke:#333
+    style F fill:#CCFFCC,stroke:#333
+    style H fill:#CCFFCC,stroke:#333
+    style J fill:#CCFFCC,stroke:#333
+    style K fill:#CCFFCC,stroke:#333
+    style E fill:#CCCCFF,stroke:#333
+    style G fill:#FFCC99,stroke:#333
+    style I fill:#FFFFCC,stroke:#333
 
 ```
