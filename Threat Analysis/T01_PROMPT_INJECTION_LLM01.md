@@ -1,5 +1,5 @@
 # PROMPT INJECTION ATTACK
-## What is a Prompt Injection attack?
+## What is a Prompt Injection attack?🧠
 Prompt Injection is a sophisticated attack that exploits the core principle of a Large Language Model (LLM), 
 its ability to follow instructions by introducing a **malicious, overriding command** into the system's input.
 
