@@ -1,4 +1,4 @@
-# PROMPT INJECTION ATTACK
+# PROMPT INJECTION ATTACK(LLM01)
 ## What is a Prompt Injection attack?🧠
 Prompt Injection is a sophisticated attack that exploits the core principle of a Large Language Model (LLM), 
 its ability to follow instructions by introducing a **malicious, overriding command** into the system's input.
@@ -94,7 +94,7 @@ This score is driven by a **High** rating for both **Confidentiality** and **Int
 as the attack can disclose proprietary data and perform unauthorized state changes (Integrity) via the agentic functions, 
 confirming the necessity of immediate, high-priority mitigation.
 
-## Mitigation Logic for Prompt Injection
+## Mitigation Logic for Prompt Injection(LLM01)
 Mitigating the Prompt Injection (LLM01) attack requires implementing several layers of security logic within the **Application Backend/Middleware** to break the attack chain.
 The defense starts at **Step 2 (Input Validation)**, where the code must enforce **Input Sanitization and Filtering** by implementing a **deny-list** to reject prompts containing known jailbreaking keywords or obfuscation techniques,
 preventing the initial payload from proceeding. The most critical defense is applied at **Step 4 (Assemble Prompt)**, where the code must ensure **Strict Context Segregation** by using the LLM API's separate roles for the system,
