@@ -136,6 +136,15 @@ graph TD
         I[6. Agent Action - Downstream Systems]
     end
 
+    %% ------------------- Define Attack Flow and Mitigation FLow (Bold Lines) -------------------
+    
+    A -.-|LLM02 Injection for Payload| B;
+    F -.-|Payload Contaminated Prompt| G;
+    G -.-|Raw Malicious Output Generated| H;
+    H -- Payload NO Tool Call --> J;
+    J ==>|Mitigation - Context-Aware Encoding & Sanitization| K;
+    K -.-|Unencoded Payload Executed| L;
+
     %% ------------------- Define Clean Data Flow (Solid Lines) -------------------
     
     A -->|1. Untrusted -> Application| B;
@@ -149,15 +158,6 @@ graph TD
     H -- 5b. Tool Call NO --> J;
     J -->|7. Post-Processing -> UI/Front-end| K;
     K -->|8. Output -> Untrusted| L;
-
-    %% ------------------- Define Attack and Mitigation Flow -------------------
-    
-    A -.-|LLM02 Injection for Payload| B;
-    F -.-|Payload Contaminated Prompt| G;
-    G -.-|Raw Malicious Output Generated| H;
-    H -- Payload NO Tool Call -.- J;
-    J ==>|Mitigation: Context-Aware Encoding & Sanitization| K;
-    K -.-|Unencoded Payload Executed| L;
 
     %% Add clear boundary markers for context
     style A fill:#FFCCCC,stroke:#333
