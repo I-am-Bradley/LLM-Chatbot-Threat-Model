@@ -30,6 +30,8 @@ This repository provides a structured threat model for a chatbot system powered 
 - Mitigation logic embedded per threat
 
 ## 📂 Repository Structure
+
+```bash
 LLM_Chatbot_Threat_Model/
 ├── README.md
 ├── THREAT_ANALYSIS/
@@ -40,20 +42,20 @@ LLM_Chatbot_Threat_Model/
 └── FINAL_REPORTS/
     ├── A_FINAL_THREAT_MODEL_REPORT.md
     └── B_EXECUTIVE_ADDRESS_AND_COST_ANALYSIS.md
-    
+```    
 ## 🔐 Threat Analysis Summary
 Each file in **THREAT_ANALYSIS/** contains:
 - Exploitation points mapped to DFD nodes
 - DREAD/CVSS scoring
 - Mitigation logic (code-level and architectural)
 - Assigned implementation team (Dev, Ops, Sec)
-| Threat ID   | Name                     | Risk Level   | Key Mitigations                                     | 
-| :---------: | :----------------------: | :----------: | :-------------------------------------------------: | 
-| LLM01       | Prompt Injection         | High         | Context Segregation, Input Sanitization             | 
-| LLM08       | Excessive Agency         | High         | PoLP, Argument Validation, Human-in-the-Loop        | 
-| LLM02       | Improper Output Handling | High         | Context-Aware Encoding, Output Sanitization         | 
-| LLM04–LLM10 | Medium Risk Cluster      | Medium       | Resource Quotas, Prompt Redaction, Sandbox Isolation| 
 
+| Threat ID   | Name                     | Risk Level   | Key Mitigations                                      | 
+| ----------- | :----------------------: | :----------: | :--------------------------------------------------: | 
+| LLM01       | Prompt Injection         | High         | Context Segregation, Input Sanitization              | 
+| LLM08       | Excessive Agency         | High         | PoLP, Argument Validation, Human-in-the-Loop         | 
+| LLM02       | Improper Output Handling | High         | Context-Aware Encoding, Output Sanitization          | 
+| LLM04–LLM10 | Medium Risk Cluster      | Medium       | Resource Quotas, Prompt Redaction, Sandbox Isolation | 
 
 ## 📊 Final Reports for Leadership
 **FINAL_REPORTS/** contains synthesized documents for strategic decision-making:
