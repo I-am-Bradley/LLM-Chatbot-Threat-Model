@@ -1,8 +1,12 @@
 # LLM-Chatbot-Threat-Model
+_________________________________________________________________________________________________
 
 ## 🧭 Project Overview
+_________________________________________________________________________________________________
 ## Title: LLM Chatbot Threat Model
+_________________________________________________________________________________________________
 ## Purpose:
+_________________________________________________________________________________________________
 This repository provides a structured threat model for a chatbot system powered by large language models (LLMs). It identifies high- and medium-risk vulnerabilities across the system’s architecture and prescribes actionable mitigations. The goal is to support secure development, inform executive decision-making, and guide future governance.
 ## Audience:
 - Security Engineers
